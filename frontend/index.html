@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodVerse</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">FV</div>
+        <div>
+          <p class="brand-kicker">Blockchain Food Distribution</p>
+          <h1 class="brand-title">FoodVerse</h1>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="refreshBtn" class="btn btn-secondary" type="button">Refresh</button>
+        <button id="connectBtn" class="btn btn-primary" type="button">Connect Wallet</button>
+      </div>
+    </header>
+
+    <section class="hero-card">
+      <div class="hero-copy">
+        <p class="hero-label">Simple Food Donation</p>
+        <h2>Share food with people who need it.</h2>
+        <p class="hero-text">
+          Publish available meals, add pickup details, and help receivers find food
+          quickly through one simple donation flow.
+        </p>
+      </div>
+
+      <div class="hero-side">
+        <div class="side-card">
+          <span class="side-title">Wallet Status</span>
+          <strong id="walletInfo">Wallet not connected</strong>
+        </div>
+        <div class="side-card">
+          <span class="side-title">Network</span>
+          <strong id="networkInfo">Network not detected</strong>
+        </div>
+      </div>
+    </section>
+
+    <p id="statusBox" class="status info">
+      Ready. Start the MongoDB backend, then paste the latest contract address in app.js.
+    </p>
+
+    <section class="metrics">
+      <div class="metric-card">
+        <span>Total Donations</span>
+        <strong id="totalDonations">0</strong>
+      </div>
+      <div class="metric-card">
+        <span>Available</span>
+        <strong id="availableDonations">0</strong>
+      </div>
+      <div class="metric-card">
+        <span>Claimed</span>
+        <strong id="claimedDonations">0</strong>
+      </div>
+      <div class="metric-card">
+        <span>Completed</span>
+        <strong id="completedDonations">0</strong>
+      </div>
+    </section>
+
+    <section class="mode-switch">
+      <button id="donateTab" class="mode-btn active" type="button" data-view="donate">
+        Donate Food
+      </button>
+      <button id="receiveTab" class="mode-btn" type="button" data-view="receive">
+        Receive Food
+      </button>
+    </section>
+
+    <section id="donateView" class="view-panel active">
+      <div class="content-grid donate-grid">
+        <div class="panel panel-form">
+          <div class="panel-head">
+            <div>
+              <p class="section-tag">Donor Submission</p>
+              <h3>Publish a donation</h3>
+            </div>
+          </div>
+
+          <form id="donationForm" class="donation-form">
+            <div class="form-field">
+              <label for="foodType">Food Type</label>
+              <input id="foodType" type="text" placeholder="Bread, Meals, Fruits, Rice" required />
+            </div>
+
+            <div class="form-field">
+              <label for="quantity">Serving Capacity</label>
+              <input
+                id="quantity"
+                type="number"
+                min="1"
+                placeholder="Number of people this food can serve"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="location">Pickup Location</label>
+              <input id="location" type="text" placeholder="Area, city, landmark" required />
+            </div>
+
+            <div class="form-field">
+              <label for="contactNumber">Contact Number</label>
+              <input id="contactNumber" type="tel" placeholder="+91 98765 43210" required />
+            </div>
+
+            <div class="form-field">
+              <label for="expiryAt">Expiry Date And Time</label>
+              <input id="expiryAt" type="datetime-local" required />
+            </div>
+
+            <div class="form-field form-field-wide">
+              <label for="foodImage">Food Image</label>
+              <input id="foodImage" type="file" accept="image/*" required />
+            </div>
+
+            <div id="imagePreview" class="image-preview empty">
+              Image preview will appear here after you select a food photo.
+            </div>
+
+            <button type="submit" class="btn btn-primary full-width">Upload And Publish Hash</button>
+          </form>
+        </div>
+      </div>
+
+      <section class="panel ledger-panel">
+        <div class="panel-head">
+          <div>
+            <p class="section-tag">Donor Ledger</p>
+            <h3>My donations</h3>
+          </div>
+        </div>
+
+        <div id="myDonationsContainer" class="donations"></div>
+      </section>
+    </section>
+
+    <section id="receiveView" class="view-panel">
+      <div class="content-grid receive-grid">
+        <div class="panel receive-panel">
+          <div class="panel-head">
+            <div>
+              <p class="section-tag">Available Food</p>
+              <h3>Receiver dashboard</h3>
+            </div>
+          </div>
+
+          <div class="receiver-toolbar">
+            <div class="receiver-filter">
+              <label for="locationFilter">Filter Location</label>
+              <input
+                id="locationFilter"
+                type="text"
+                placeholder="Type a city, area, or landmark"
+              />
+            </div>
+          </div>
+
+          <div id="receiveDonationsContainer" class="donations"></div>
+        </div>
+      </div>
+
+      <section class="panel ledger-panel">
+        <div class="panel-head">
+          <div>
+            <p class="section-tag">Request Status</p>
+            <h3>My food requests</h3>
+          </div>
+        </div>
+
+        <div id="claimedByMeContainer" class="donations"></div>
+      </section>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
